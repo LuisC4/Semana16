@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo Local Storage</title>
+</head>
+<body>
+    
+
+        <div id="app">
+        <p>
+        Mi nombre es <input v-model="name">
+        y tengo <input v-model="age"> años. Mi direccion es: <input v-model="address">
+        </p>
+        <p>
+        <button @click="persist">Guardar</button>
+        </p>
+        </div>
+        
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script type="text/javascript">
+        const app = new Vue({
+        el: '#app',
+        data: {
+        name: '',
+        age: 0,
+        address: ''
+        },
+        mounted() {
+        if (localStorage.name) {
+        this.name = localStorage.name;
+        }
+        if (localStorage.age) {
+        this.age = localStorage.age;
+        }
+        if (localStorage.address){
+            this.address = localStorage.address
+        }
+        },
+        methods: {
+        persist() {
+        localStorage.name = this.name;
+        localStorage.age = this.age;
+        localStorage.address = this.address
+        console.log('imaginen que estoy haciendo más cosas...');
+        }
+        }
+        })
+        
+        </script>
+</body>
+</html>

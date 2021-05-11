@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container class="text-center">
+            <h1>Datos:</h1>
+            <p>{{data}}</p>
+            <p class="text-right">Actualizado: {{time}}</p>
+            <h2>Precio BitCoin ${{data.rate}}</h2>
+            <v-row justify="center">
+              <v-col cols="12"
+              md="3">
+                <v-text-field
+                v-model="amount"
+                label="Bitcoin"
+                required
+              ></v-text-field>
+              </v-col>
+              <v-col cols="12"
+              md="3">
+                <v-text-field
+                v-model="result"
+                label="USD"
+                required
+              ></v-text-field>
+              </v-col>
+            </v-row>
+            
+          
+          <v-btn
+  elevation="2"
+  @click="convertirBtnToUsd"
+>Calcular</v-btn>
+<v-btn
+elevation="2"
+@click="UsdToBtn"
+>asd2</v-btn>
+            <h3>Resultado: ${{result}}</h3>
+            <h2>{{usd}}</h2>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data(){
+          return{
+              data: '',
+              time: '',
+              amount: 0,
+              result: 0,
+              usd: ''
+          }
+          },
+          methods: {
+    convertirBtnToUsd(){
+        this.result = this.amount * this.data.rate_float
+        return this.result.toFixed(2);
+    },
+    UsdToBtn(){
+      axios
+      .get("https://blockchain.info/tobtc?currency=USD&value="+this.result)
+      .then(response => (this.usd = response.data))
+    }
+  },
+          mounted() {
+            axios
+      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => (this.data = response.data.bpi.USD,
+      this.time = response.data.time.updated
+      )) 
+      }
+    })
+  </script>
+</body>
+</html>
