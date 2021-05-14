@@ -1,90 +1,217 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-</head>
-<body>
-  <div id="app">
-    <v-app>
-      <v-main>
-        <v-container class="text-center">
-            <h1>Datos:</h1>
-            <p>{{data}}</p>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <div>
+          <v-app-bar app id="appbarmain"
+          color="orange"
+            absolute
+          >
+            <v-toolbar-title>BITCOIN BTC</v-toolbar-title>
+      
+            <v-spacer></v-spacer>
+            <v-btn href="" target="_blank" style="margin-right: 20px;"
+            color="primary">
+              Repositorio
+            </v-btn>
+            <v-switch
+            v-model="$vuetify.theme.dark"
+            hint="oscuro"
+            color ="indigo"
+            inset
+            persistent-hint
+          ></v-switch>
+          </v-app-bar>
+        </div>
+        <v-main>
+          <v-container class="text-center">
+            <div class="parallaxmain mb-3">
+              <v-parallax
+              dark
+              src="assets/parallaxmain.jpg"
+              height="400"
+            >
+              <v-row
+                align="center"
+                justify="center"
+              >
+                <v-col
+                  class="text-center"
+                  cols="12"
+                >
+                  <h1 class="display-1 font-weight-thin mb-4" style="font-size: 300% !important;">
+                    BITCOIN
+                  </h1>
+                  <h2 class="subheading">
+                    Moneda virtual o un medio de intercambio electrónico que sirve <br> para adquirir productos y servicios como cualquier otra moneda.
+                  </h2>
+                </v-col>
+              </v-row>
+            </v-parallax>
+            </div>
             <p class="text-right">Actualizado: {{time}}</p>
-            <h2>Precio BitCoin ${{data.rate}}</h2>
             <v-row justify="center">
-              <v-col cols="12"
-              md="3">
-                <v-text-field
-                v-model="amount"
-                label="Bitcoin"
-                required
-              ></v-text-field>
+              <v-col cols="12" md="3">
+                <h2>Precio BitCoin ${{valor_Btc.toFixed(2)}}</h2>
               </v-col>
-              <v-col cols="12"
-              md="3">
-                <v-text-field
-                v-model="result"
-                label="USD"
-                required
-              ></v-text-field>
+              <v-col cols="12" md="3">
+                <h2>Precio Dolar en BitCoin ${{valor_Usd.toFixed(6)}}</h2>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="12" md="2" sm="2">
+                <h2>BTC</h2>
+              </v-col>
+              <v-col cols="12" md="1" sm="2">
+                <h2>TO</h2>
+              </v-col>
+              <v-col cols="12" md="2" sm="2">
+                <h2>USD</h2>
               </v-col>
             </v-row>
             
-          
-          <v-btn
-  elevation="2"
-  @click="convertirBtnToUsd"
->Calcular</v-btn>
-<v-btn
-elevation="2"
-@click="UsdToBtn"
->asd2</v-btn>
-            <h3>Resultado: ${{result}}</h3>
-            <h2>{{usd}}</h2>
-        </v-container>
-      </v-main>
-    </v-app>
-  </div>
+            
+            <v-row justify="center">
+              <v-col cols="12" md="3">
+                <v-text-field v-model="BitCoin" type="number" solo prepend-inner-icon="mdi-bitcoin" label="BTC" @change="BtnToUsd"></v-text-field>
+              </v-col>
+              <v-col cols="12" md="3">
+                <v-text-field v-model="usd" label="USD" type="number" solo prepend-inner-icon="mdi-currency-usd" @change="UsdToBtn"></v-text-field>
+              </v-col>
+            </v-row>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      vuetify: new Vuetify(),
-      data(){
-          return{
-              data: '',
-              time: '',
-              amount: 0,
-              result: 0,
-              usd: ''
-          }
+            <div class="datospersonales">
+              <v-divider class="mt-5 mb-5"></v-divider>
+              <h1>Ejemplo almacenar registro Local Storage</h1>
+              <v-row justify="center">
+                <v-col cols="12" md="3">
+                  <v-text-field v-model="nombre" label="Nombre"></v-text-field>
+                </v-col>
+                <v-col cols="12" md="3">
+                  <v-text-field v-model="edad" label="Edad"></v-text-field>
+                </v-col>
+                <v-col cols="12" md="5">
+                  <v-text-field
+                    v-model="direccion"
+                    label="Direccion"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="1">
+                  <v-btn elevation="2" @click="SavePerson">Guardar</v-btn>
+                </v-col>
+              </v-row>
+            </div>
+            <v-divider class="mt-5 mb-5"></v-divider>
+            <h1>Guardar precio 1 BitCoin Local Storage</h1>
+            <v-row justify="center">
+              <v-col cols="12" md="3">
+                <v-text-field
+              v-model="priceBtnSave"
+              label="Ultimo Precio 1 BitCoin guardado:"
+            ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="1">
+                <v-btn elevation="2" @click="SaveBitCoin">Guardar</v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+        <v-footer padless>
+          <v-col
+            class="text-center"
+            cols="12"
+          >
+            {{ new Date().getFullYear() }} — <strong>Precio Criptomonedas</strong>
+            <a class="ml-10" href="https://free.currencyconverterapi.com/" target="_blank">API</a>
+          </v-col>
+        </v-footer>
+      </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify({
+  theme: { dark: true },
+}),
+        data: {
+          time: "",
+          usd: 0,
+          BitCoin: 0,
+          valor_Btc: 0,
+          valor_Usd: 0,
+          computedBtc: 0,
+          computedUsd: 0,
+          nombre: "",
+          edad: 0,
+          direccion: "",
+          priceBtnSave: 0
+        },
+        mounted() {
+          if (localStorage.nombre) this.nombre = localStorage.nombre;
+          if (localStorage.edad) this.edad = localStorage.edad;
+          if (localStorage.direccion) this.direccion = localStorage.direccion;
+          if (localStorage.priceBtnSave) this.priceBtnSave = localStorage.priceBtnSave;
+
+          this.time = Date();
+          // Traer valor moneda
+          /*axios
+            .get("https://free.currconv.com/api/v7/convert?q=USD_BTC,BTC_USD&compact=ultra&apiKey=5b1305ed1d82f57e5dc3")
+            .then((response) => (this.valor_Btc = response.data.BTC_USD,
+            this.valor_Usd = response.data.USD_BTC
+            ));*/
+        },
+        methods: {
+          BtnToUsd() {
+            this.computedUsd = parseFloat(this.BitCoin) * parseFloat(this.valor_Btc);
+            this.usd = this.computedUsd
+            this.usd = this.usd.toFixed(2)
+            this.computedUsd = 0
           },
-          methods: {
-    convertirBtnToUsd(){
-        this.result = this.amount * this.data.rate_float
-        return this.result.toFixed(2);
-    },
-    UsdToBtn(){
-      axios
-      .get("https://blockchain.info/tobtc?currency=USD&value="+this.result)
-      .then(response => (this.usd = response.data))
-    }
-  },
-          mounted() {
-            axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.data = response.data.bpi.USD,
-      this.time = response.data.time.updated
-      )) 
-      }
-    })
-  </script>
-</body>
+          UsdToBtn() {
+            this.computedBtc = parseFloat(this.usd) * parseFloat(this.valor_Usd);
+            this.BitCoin = this.computedBtc
+            this.BitCoin = this.BitCoin.toFixed(6)
+            this.computedBtc = 0
+          },
+          SavePerson() {
+            localStorage.nombre = this.nombre;
+            localStorage.edad = this.edad;
+            localStorage.direccion = this.direccion;
+          },
+          SaveBitCoin() {
+            try {
+              localStorage.priceBtnSave = this.priceBtnSave;
+            
+            } catch (error) {
+              alert("Datos no guardados")
+            }
+            alert("Datos guardado correctamente")
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
